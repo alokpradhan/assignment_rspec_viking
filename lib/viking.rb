@@ -13,6 +13,9 @@ class Viking
     @weapon = weapon
   end
 
+  def health_add
+    @health += 1
+  end
 
   def attack(target)
     puts "#{name} is attacking #{target.name}!"
@@ -70,13 +73,13 @@ end
 # Run script
 oleg = Viking.new("Oleg")
 sven = Viking.new("Sven")
-oleg.attack(sven)
-oleg.pick_up_weapon(Bow.new(2))
-3.times { oleg.attack(sven) }
-sven.attack(oleg)
-sven.pick_up_weapon(Axe.new)
-3.times {sven.attack(oleg)}
-puts "\nInspecting vikings:\n"
-puts oleg.inspect
-puts sven.inspect
-puts "\n...thanks for playing.\n\n"
+# oleg.attack(sven)
+# oleg.pick_up_weapon(Bow.new(2))
+# 3.times { oleg.attack(sven) }
+# sven.attack(oleg)
+# sven.pick_up_weapon(Axe.new)
+# 3.times {sven.attack(oleg)}
+# puts "\nInspecting vikings:\n"
+# puts oleg.inspect
+# puts sven.inspect
+# puts "\n...thanks for playing.\n\n"

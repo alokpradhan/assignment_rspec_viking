@@ -40,22 +40,16 @@ describe Bow do
     it 'reduces arrow count by 1' do
       # expectations = bow.arrows
       # result = bow.arrows - 1
-
-      expect(bow.use.arrows).to eq(9)
+      bow.use
+      expect(bow.arrows).to eq(9)
 
     end
 
-    it 'raises error when out_of_arrows'
-
-
-  end
-
-  describe "#out_of_arrows?" do
-
-    it ''
-
+    it 'raises error when out_of_arrows' do
+      bow2 = Bow.new(0)
+      expect{bow2.use}.to raise_error("Out of arrows")
+    end
 
   end
-
 
 end
