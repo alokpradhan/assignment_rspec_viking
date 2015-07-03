@@ -4,7 +4,7 @@ require_relative '../lib/weapons/weapon.rb'
 
 describe Viking do
 
-	let(:viking){Viking.new("Random", 75, 20)}
+	let(:viking){Viking.new("Random", 75)}
 	let(:axe){Axe.new}
 	let(:bow){Bow.new}
 
@@ -56,18 +56,54 @@ describe Viking do
 			end
 		end
 
-		describe '#receive_attack' do
-			it 'reduces vikings health by specified amount' do
+	context "attack and receive attacks" do
+
+		let(:victim){Viking.new("Victor")}
+
+			describe '#receive_attack' do
+				it 'reduces vikings health by specified amount' do
+					viking.receive_attack(10)
+					expect(viking.health).to eq(65)
+				end
+
+				it "causes health of attacked viking to drop" do
+					old_health = viking.health
+					viking.receive_attack(10)
+					expect(viking.health).to be < old_health
+				end
+
+				it "causes attacked viking to call #take_damage" do
+					expect(viking).to receive(:take_damage)
+					viking.receive_attack(5)
+				end
 			end
 
-			it "causes health of attacked viking to drop"
-			it "causes attacked viking to call #take_damage"
-			specify "attacking with no weapon to run #damage_with_fists"
-			specify "attacking with weapon to run #damage_with_weapon"
-			specify "attacking with weapon deals damage equal to Viking's strength * Weapon's multiplier"
-			specify "attacking with Bow without arrows uses Fists instead"
+			describe '#attack' do
 
+				specify "attacking with no weapon to run #damage_with_fists" do
+					allow(victim).to receive(:receive_attack).with(:damage_dealt)
+					expect(victim).to receive(:damage_with_fists)
+					viking.attack(victim)
+				end
+
+				specify "attacking with weapon to run #damage_with_weapon" do
+					viking.pick_up_weapon(axe)
+
+					expect(viking.attack(victim)).to receive(:receive_attack).with(:damage_dealt)
+					viking.attack(victim)
+				end
+
+				specify "attacking with weapon deals damage equal to Viking's strength * Weapon's multiplier" do
+					viking.pick_up_weapon(axe)
+					init_health = victim.health
+					viking.attack(victim)
+					health_after = victim.health
+					damage = viking.weapon.use * viking.strength
+					expect(init_health - health_after).to eq(damage)
+				end
+
+				specify "attacking with Bow without arrows uses Fists instead"
+			end
 		end
 	end
-
 end
