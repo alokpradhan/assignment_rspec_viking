@@ -6,14 +6,11 @@ describe Warmup do
 	describe '#gets_shout' do
 
 		it 'accepts an input through gets' do
-
 			#stub gets with lowercase
 			#expect an upcase return
 			allow(a).to receive(:gets).and_return("hello")
 			expect(a.gets_shout).to eq("HELLO")
-
 		end
-
 	end
 
 	describe '#double_size' do
@@ -29,7 +26,6 @@ describe Warmup do
 			array2 = double("d", :size => 2)
 			expect(a.double_size(array2)).to eq(array2.size*2)
 		end
-
 	end
 
 	describe '#calls_some_methods' do

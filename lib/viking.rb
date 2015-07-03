@@ -66,6 +66,8 @@ class Viking
     raise "#{self.name} has Died..." if @health <= 0
   end
 
+
+
 end
 
 # Run script
