@@ -81,15 +81,15 @@ describe Viking do
 			describe '#attack' do
 
 				specify "attacking with no weapon to run #damage_with_fists" do
-					allow(victim).to receive(:receive_attack).with(:damage_dealt)
-					expect(victim).to receive(:damage_with_fists)
+					allow(viking).to receive(:damage_with_fists).and_return(5)
+					expect(viking).to receive(:damage_with_fists)
 					viking.attack(victim)
 				end
 
 				specify "attacking with weapon to run #damage_with_weapon" do
+					allow(viking).to receive(:damage_with_weapon).and_return(10)
 					viking.pick_up_weapon(axe)
-
-					expect(viking.attack(victim)).to receive(:receive_attack).with(:damage_dealt)
+					expect(viking).to receive(:damage_with_weapon)
 					viking.attack(victim)
 				end
 
@@ -102,7 +102,17 @@ describe Viking do
 					expect(init_health - health_after).to eq(damage)
 				end
 
-				specify "attacking with Bow without arrows uses Fists instead"
+				specify "attacking with Bow without arrows uses Fists instead" do
+					bow = instance_double("Bow", :arrows => 0, :is_a? => true)
+					viking.pick_up_weapon(bow)
+					allow(viking).to receive(:damage_with_fists).and_return(1)
+					expect(viking).to receive(:damage_with_fists)
+					viking.attack(victim)
+				end
+
+				specify "killing a viking raises an error" do
+					expect{viking.receive_attack(75)}.to raise_error
+				end
 			end
 		end
 	end

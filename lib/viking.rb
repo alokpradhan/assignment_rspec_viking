@@ -1,6 +1,7 @@
 require_relative 'weapons/axe'
 require_relative 'weapons/bow'
 require_relative 'weapons/fists'
+require 'pry-byebug'
 
 class Viking
   attr_reader :health, :strength, :name, :weapon
@@ -13,11 +14,8 @@ class Viking
     @weapon = weapon
   end
 
-  def health_add
-    @health += 1
-  end
-
   def attack(target)
+  #binding.pry
     puts "#{name} is attacking #{target.name}!"
     target.receive_attack(damage_dealt)
   end
